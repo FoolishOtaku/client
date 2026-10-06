@@ -5,28 +5,18 @@ services:
     container_name: brianindex-client
     restart: unless-stopped
     environment:
-      API_BASE_URL: ${API_BASE_URL:-http://brian.aselaboratory.com/api/items}
+      API_BASE_URL: ${API_BASE_URL:-https://brian.aselaboratory.com/api/items}
     expose:
       - "80"
     # Uncomment to test directly on the server via http://127.0.0.1:8080
     # ports:
     #   - "127.0.0.1:8080:80"
     networks:
-      - brianindex
+      - tunnel_net
 
-  cloudflared:
-    image: cloudflare/cloudflared:latest
-    container_name: brianindex-tunnel
-    restart: unless-stopped
-    command: tunnel --no-autoupdate run
-    environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?Set TUNNEL_TOKEN in .env}
-    depends_on:
-      web:
-        condition: service_healthy
-    networks:
-      - brianindex
-
+# Reuses the existing cloudflared container from ~/projects/cloudflare.
+# In Zero Trust -> Tunnels -> Public Hostname, point the client hostname to:
+#   HTTP  ->  brianindex-client:80
 networks:
-  brianindex:
-    name: brianindex
+  tunnel_net:
+    external: true

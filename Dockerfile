@@ -2,7 +2,7 @@
 FROM nginx:1.27-alpine
 
 # Default API endpoint (override at runtime via the API_BASE_URL env var)
-ENV API_BASE_URL=http://brian.aselaboratory.com/api/items
+ENV API_BASE_URL=https://brian.aselaboratory.com/api/items
 
 # Nginx's entrypoint runs envsubst on /etc/nginx/templates/*.template
 # and writes the result to /etc/nginx/conf.d/ on every container start.
