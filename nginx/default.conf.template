@@ -1,0 +1,27 @@
+server {
+    listen 80;
+    server_name _;
+    server_tokens off;
+
+    root  /usr/share/nginx/html;
+    index index.html;
+
+    gzip on;
+    gzip_types text/css application/javascript application/json;
+
+    # Runtime config consumed by script.js (generated from the API_BASE_URL env var)
+    location = /config.js {
+        default_type application/javascript;
+        add_header Cache-Control "no-store";
+        return 200 'window.APP_CONFIG = { apiBaseUrl: "${API_BASE_URL}" };';
+    }
+
+    location ~* \.(css|js)$ {
+        add_header Cache-Control "public, max-age=3600";
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+}

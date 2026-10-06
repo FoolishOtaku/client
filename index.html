@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="REST API Client — Manage items via GET, POST, PUT, PATCH, DELETE">
+  <title>REST API Client</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <h1>REST API Client</h1>
+      <p class="subtitle">Manage items on the server</p>
+    </header>
+
+    <!-- ── Server Config ─────────────────────────── -->
+    <section class="card" id="config-section">
+      <h2>Server Connection</h2>
+      <div class="input-row">
+        <label for="server-url">API Base URL</label>
+        <input type="text" id="server-url" value="http://brian.aselaboratory.com/api/items"
+          placeholder="http://<SERVER_IP>:3000/api/items">
+      </div>
+    </section>
+
+    <!-- ── Create / Update Form ──────────────────── -->
+    <section class="card" id="form-section">
+      <h2 id="form-title">Create New Item</h2>
+      <form id="item-form">
+        <input type="hidden" id="item-id">
+        <div class="input-row">
+          <label for="item-name">Name</label>
+          <input type="text" id="item-name" placeholder="Item name" required>
+        </div>
+        <div class="input-row">
+          <label for="item-desc">Description</label>
+          <input type="text" id="item-desc" placeholder="Item description">
+        </div>
+        <div class="btn-group">
+          <button type="submit" class="btn btn-primary" id="btn-submit">POST — Create</button>
+          <button type="button" class="btn btn-secondary" id="btn-put" style="display:none;">PUT — Replace</button>
+          <button type="button" class="btn btn-secondary" id="btn-patch" style="display:none;">PATCH — Partial</button>
+          <button type="button" class="btn btn-cancel" id="btn-cancel" style="display:none;">Cancel</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ── Items Table ───────────────────────────── -->
+    <section class="card" id="items-section">
+      <div class="table-header">
+        <h2>Items</h2>
+        <button class="btn btn-primary" id="btn-refresh">GET — Refresh</button>
+      </div>
+      <table id="items-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="items-body">
+          <tr>
+            <td colspan="4" class="empty">No items loaded. Click Refresh.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ── Response Log ──────────────────────────── -->
+    <section class="card" id="log-section">
+      <h2>Response Log</h2>
+      <pre id="response-log">Responses will appear here...</pre>
+    </section>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

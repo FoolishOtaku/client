@@ -1,0 +1,32 @@
+services:
+  web:
+    build: .
+    image: brianindex-client:latest
+    container_name: brianindex-client
+    restart: unless-stopped
+    environment:
+      API_BASE_URL: ${API_BASE_URL:-http://localhost:3000/api/items}
+    expose:
+      - "80"
+    # Uncomment to test directly on the server via http://127.0.0.1:8080
+    # ports:
+    #   - "127.0.0.1:8080:80"
+    networks:
+      - brianindex
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: brianindex-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?Set TUNNEL_TOKEN in .env}
+    depends_on:
+      web:
+        condition: service_healthy
+    networks:
+      - brianindex
+
+networks:
+  brianindex:
+    name: brianindex
