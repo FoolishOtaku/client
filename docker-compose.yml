@@ -5,7 +5,7 @@ services:
     container_name: brianindex-client
     restart: unless-stopped
     environment:
-      API_BASE_URL: ${API_BASE_URL:-http://localhost:3000/api/items}
+      API_BASE_URL: ${API_BASE_URL:-http://brian.aselaboratory.com/api/items}
     expose:
       - "80"
     # Uncomment to test directly on the server via http://127.0.0.1:8080
